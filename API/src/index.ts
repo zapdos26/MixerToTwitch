@@ -26,5 +26,9 @@ createConnection()
     app.listen(3000, () => {
       console.log("Server started on port 3000!");
     });
+    ServiceProcessor.processAll().then();
+    schedule("0 1 * * *", () => {
+      ServiceProcessor.processAll().then();
+    });
   })
   .catch((error) => console.log(error));

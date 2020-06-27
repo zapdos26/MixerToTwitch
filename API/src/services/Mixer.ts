@@ -12,6 +12,7 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import MixerSubscription from "../types/MixerSubscription";
 import MixerFollow from "../types/MixerFollow";
 import { MixerUser } from "../types/MixerUser";
+import AccessToken from "../types/AccessToken";
 
 require("dotenv").config();
 
@@ -67,10 +68,7 @@ export class Mixer {
     return resp.body["channel"]["id"];
   };
 
-  static getToken = async (
-    code: string,
-    user: User = null
-  ): Promise<AxiosResponse.data> => {
+  static getToken = async (code: string): Promise<AxiosResponse.data> => {
     const options: AxiosRequestConfig = {
       url: "https://mixer.com/api/v1/oauth/token",
       method: "post",
@@ -79,7 +77,7 @@ export class Mixer {
         client_secret: CLIENT_SECRET,
         code,
         grant_type: "authorization_code",
-        redirect_uri: `${DOMAIN}/callback/mixer${user != null ? "/admin" : ""}`,
+        redirect_uri: `${DOMAIN}/callback/mixer`,
       },
       headers: {
         "content-type": "application/json",
@@ -89,9 +87,6 @@ export class Mixer {
       return status >= 200 && status < 300; // default
     };
     const resp = await axios(options);
-    if (user != null) {
-      await Mixer.saveToken(user, resp);
-    }
     return resp.data;
   };
 
@@ -186,7 +181,7 @@ export class Mixer {
   };
 
   private static saveToken = async (
-    user: User,
+    token: AccessToken,
     resp: AxiosResponse
   ): Promise<string> => {
     if ("error" in resp) {
@@ -194,11 +189,11 @@ export class Mixer {
         `Error in getting/refreshing token for ${user.discordId}: ${resp["error"]}`
       );
     }
-    user.mixerAccessToken = EncryptionHelper.encrypt(
+    token.mixerAccessToken = EncryptionHelper.encrypt(
       resp.data["access_token"],
       DATABASE_SECRET
     );
-    user.mixerRefreshToken = EncryptionHelper.encrypt(
+    token.mixerRefreshToken = EncryptionHelper.encrypt(
       resp.data["refresh_token"],
       DATABASE_SECRET
     );

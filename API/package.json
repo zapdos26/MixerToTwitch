@@ -33,12 +33,13 @@
     "pg": "^8.0.3",
     "query-string": "^6.11.0",
     "reflect-metadata": "^0.1.10",
+    "ts-node-dev": "^1.0.0-pre.49",
     "twitch": "^4.0.0",
     "typeorm": "^0.2.25"
   },
   "scripts": {
     "build": "tsc",
-    "start": "set debug=* && ts-node --respawn --transpileOnly ./src/index.ts",
+    "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
     "prod": "node ./index.js",
     "lint": "eslint . --ext .ts",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",

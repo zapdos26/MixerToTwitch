@@ -3,8 +3,14 @@ import { User } from "../entity/User";
 import { AdministrationHelper } from "../helpers/AdministrationHelper";
 import { UserHelper } from "../helpers/UserHelper";
 import { Twitch } from "../services/Twitch";
-import { ServiceProcessor } from "../services/ServiceProcessor";
 import { Mixer } from "../services/Mixer";
+import AccessToken from "../types/AccessToken";
+import { EncryptionHelper } from "../helpers/EncryptionHelper";
+import { TokenHelper } from "../helpers/TokenHelper";
+
+require("dotenv").config();
+
+const DATABASE_SECRET = process.env.DATABASE_SECRET;
 
 class AdministrationController {
   static twitchCallback = async (
@@ -27,32 +33,50 @@ class AdministrationController {
       user.twitchId = twitchUser.id;
       await UserHelper.saveUser(user);
       res.status(200).send({ success: true });
-      await ServiceProcessor.processFollowers(user);
     } catch (e) {
       console.log(e);
-      res.status(500).send({ error: e });
+      res.status(500).send({ message: e.message });
     }
   };
 
   static mixerCallback = async (req: Request, res: Response): Promise<void> => {
     try {
       const code = <string>req.query.code;
-      const user: User = res.locals.user;
       if (!AdministrationHelper.checkCallback(code, "mixer", res)) return;
+      let token: Object;
       try {
-        const token = await Mixer.getToken(code, user);
-        user.mixerId = await Mixer.getCurrentUserId(token["access_token"]);
-        await UserHelper.saveUser(user);
+        token = await Mixer.getToken(code);
+        const mixerId = await Mixer.getCurrentUserId(token["access_token"]);
+        let user: User;
+        try {
+          user = await UserHelper.getUserbyMixer(mixerId);
+        } catch (e) {
+          user = new User();
+          user.mixerId = mixerId;
+        }
+        user.mixerAccessToken = EncryptionHelper.encrypt(
+          token["access_token"],
+          DATABASE_SECRET
+        );
+        user.mixerRefreshToken = EncryptionHelper.encrypt(
+          token["refresh_token"],
+          DATABASE_SECRET
+        );
+        user = await UserHelper.saveUser(user);
+        const websiteToken = TokenHelper.generateWebsiteAccessToken(
+          user.mixerId
+        );
+        res.setHeader("token", websiteToken);
+        res.setHeader("Access-Control-Expose-Headers", "token");
         res.status(200).send({ success: true });
-        await ServiceProcessor.processFollowers(user);
       } catch (e) {
         console.log(e);
-        res.status(400).send({ error: { message: e.message } });
+        res.status(400).send({ message: e.message });
         return;
       }
     } catch (e) {
       console.log(e);
-      res.status(500).send({ error: e });
+      res.status(500).send({ message: e.message });
     }
   };
 }

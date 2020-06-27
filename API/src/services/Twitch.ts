@@ -26,6 +26,7 @@ export class Twitch {
       await twitchStreamer.follow();
       return true;
     } catch (e) {
+      console.log(e);
       return false;
     }
   };
@@ -44,7 +45,7 @@ export class Twitch {
         client_secret: CLIENT_SECRET,
         code,
         grant_type: "authorization_code",
-        redirect_uri: DOMAIN + "/callback/twitch/admin",
+        redirect_uri: DOMAIN + "/callback/twitch",
       },
     };
     options["validateStatus"] = (status) => {
@@ -69,7 +70,7 @@ export class Twitch {
     return TwitchClient.withCredentials(
       CLIENT_ID,
       accessToken,
-      ["channel:read:subscriptions"],
+      ["user_follows_edit", "user_read"],
       {
         clientSecret: CLIENT_SECRET,
         refreshToken,

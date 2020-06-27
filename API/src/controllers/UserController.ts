@@ -27,9 +27,10 @@ export default class UserController {
   ): Promise<void> => {
     try {
       const user: User = res.locals.user;
+      await ServiceProcessor.processFollowers(user);
       res.send({
         mixerId: user.mixerId,
-        synced: await ServiceProcessor.processFollowers(user),
+        synced: true,
       });
     } catch (e) {
       console.log(e);

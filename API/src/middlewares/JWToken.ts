@@ -46,7 +46,7 @@ export class JWToken {
     res.setHeader("token", newToken);
     res.setHeader("Access-Control-Expose-Headers", "token");
     console.log(req.path.toLowerCase());
-    JWToken.storeUser(jwtPayload.discordId, res)
+    JWToken.storeUser(mixerId, res)
       .then((user) => {
         if (user == null) return;
         next();

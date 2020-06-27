@@ -9,10 +9,6 @@ routerCallback.get(
   [JWToken.checkWebsiteJWT],
   AdministrationController.twitchCallback
 );
-routerCallback.get(
-  "/mixer",
-  [JWToken.checkWebsiteJWT],
-  AdministrationController.mixerCallback
-);
+routerCallback.get("/mixer", AdministrationController.mixerCallback);
 
 export default routerCallback;
