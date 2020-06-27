@@ -1,0 +1,21 @@
+h1 {
+  color: rgba(255, 255, 255, 0.87);
+  text-align: center;
+}
+
+h2 {
+  color: rgba(255, 255, 255, 0.87);
+  text-align: center;
+}
+
+header {
+  margin: 0;
+  padding: 0;
+}
+
+:host {
+  background-color: #222;
+  display: block;
+  border: 1px solid black;
+  margin: 0;
+}

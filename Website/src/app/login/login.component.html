@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="login-status">
+    You are not logged in!
+  </div>
+</div>
+<div class="container" rows="2">
+  <div class="tos-box">
+    <input (change)="onCheck()" [checked]="checked" id="tos" type="checkbox">
+    <label for="tos">
+      I have read and agree to the <a [routerLink]="['/tos']" style="color:white">Terms of Service.</a>
+    </label>
+  </div>
+  <div style.width="200%">
+    <a mat-raised-button class="login" [href]="mixerURL" [disabled]="!checked">
+      <div class="text">Log in with Mixer</div>
+      <div class="icon"><img position=absolute src="./assets/images/mixer.svg" width="30" alt="Mixer Icon"></div>
+    </a>
+  </div>
+</div>

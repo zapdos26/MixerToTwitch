@@ -1,0 +1,10 @@
+<div class="login-container" [style.border]=" '1.5px solid ' +  (syncData.synced ? 'Yes' : 'No')">
+  <div class="login-status">
+    Synced? {{syncData.synced ? "Yes" : "No"}}
+    <button (click)="logout()" mat-button style="font-size: 16px">Logout</button>
+  </div>
+</div>
+<div class="center">
+  <app-service-status serviceColor='#9146FF' [serviceLink]="twitchURL" [serviceLinked]="userData['twitchId'] != null"
+    serviceLogo='twitch.svg' serviceName='Twitch'></app-service-status>
+</div>
