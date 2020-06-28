@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { TwitchCallbackComponent } from './twitch-callback.component';
+import { TwitchCallbackComponent } from "./twitch-callback.component";
 
-describe('TwitchCallbackComponent', () => {
+describe("TwitchCallbackComponent", () => {
   let component: TwitchCallbackComponent;
   let fixture: ComponentFixture<TwitchCallbackComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TwitchCallbackComponent ]
-    })
-    .compileComponents();
+      declarations: [TwitchCallbackComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('TwitchCallbackComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

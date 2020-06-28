@@ -3,6 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ngx-cookie-service";
 import { environment } from "src/environments/environment";
+import { domain } from "process";
 
 @Component({
   selector: "app-mixer-callback",
@@ -26,11 +27,9 @@ export class MixerCallbackComponent {
             "token",
             resp.headers.get("token"),
             0.041,
-            "/"
-          );
-          sessionStorage.setItem(
-            "discord",
-            JSON.stringify(resp.body["discord"])
+            "/",
+            "mixertotwitch.xyz",
+            true
           );
           this.router.navigate(["/dashboard"]).then();
         });

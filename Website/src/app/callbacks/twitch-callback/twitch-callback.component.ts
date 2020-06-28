@@ -27,7 +27,9 @@ export class TwitchCallbackComponent {
               "token",
               resp.headers.get("token"),
               0.041,
-              "/"
+              "/",
+              "mixertotwitch.xyz",
+              true
             );
             this.router.navigate(["/dashboard"]).then();
           },

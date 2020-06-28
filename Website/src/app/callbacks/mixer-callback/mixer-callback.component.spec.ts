@@ -1,16 +1,15 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { MixerCallbackComponent } from './mixer-callback.component';
+import { MixerCallbackComponent } from "./mixer-callback.component";
 
-describe('MixerCallbackComponent', () => {
+describe("MixerCallbackComponent", () => {
   let component: MixerCallbackComponent;
   let fixture: ComponentFixture<MixerCallbackComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MixerCallbackComponent ]
-    })
-    .compileComponents();
+      declarations: [MixerCallbackComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +18,7 @@ describe('MixerCallbackComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });
