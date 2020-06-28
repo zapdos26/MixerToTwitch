@@ -10,7 +10,7 @@ import { PrivacyComponent } from "./privacy/privacy.component";
 import { MixerCallbackComponent } from "./callbacks/mixer-callback/mixer-callback.component";
 
 const routes: Routes = [
-  { path: "", redirectTo: "dashboard", pathMatch: "full" },
+  { path: "", redirectTo: "/dashboard", pathMatch: "full" },
   { path: "login", component: LoginComponent },
   { path: "error", component: ErrorComponent },
   {
