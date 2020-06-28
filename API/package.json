@@ -40,7 +40,7 @@
   "scripts": {
     "build": "tsc",
     "start": "set debug=* && ts-node-dev --respawn --transpileOnly ./src/index.ts",
-    "prod": "node ./index.js",
+    "prod": "node ./build/index.js",
     "lint": "eslint . --ext .ts",
     "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
     "typeorm:cli": "ts-node ./node_modules/typeorm/cli -f ./src/ormconfig.ts"
