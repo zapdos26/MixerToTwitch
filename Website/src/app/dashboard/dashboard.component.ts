@@ -4,6 +4,7 @@ import { CookieService } from "ngx-cookie-service";
 import { environment } from "../../environments/environment";
 import { Router } from "@angular/router";
 import SyncData from "src/_modals/SyncData";
+import UserData from "src/_modals/UserData";
 
 @Component({
   selector: "app-dashboard",
@@ -21,7 +22,7 @@ export class DashboardComponent {
     "&state=" +
     sessionStorage.getItem("state");
 
-  userData: Object = {
+  userData: UserData = {
     twitchId: null,
     mixerId: null,
   };
@@ -42,7 +43,7 @@ export class DashboardComponent {
           Authorization: `Bearer ${cookieService.get("token")}`,
         },
       })
-      .subscribe((data) => (this.userData = data));
+      .subscribe((data) => (this.userData = <UserData>data));
     this.http
       .get(environment.apiUrl + "/users/sync/current", {
         headers: {
