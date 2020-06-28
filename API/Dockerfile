@@ -1,6 +1,6 @@
 FROM node:alpine
 WORKDIR /usr/src/app
-COPY ./ ./
+COPY API/ ./
 RUN npm install --production --no-audit
 RUN npm run build
 EXPOSE 3000

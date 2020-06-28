@@ -1,3 +1,5 @@
 node_modules/
 src/app/environments/environment.prod.ts
 dist/
+.firebaserc
+firebase.json
